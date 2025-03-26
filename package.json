@@ -1,0 +1,14 @@
+{
+	"name": "nipa",
+	"private": true,
+	"scripts": {
+		"dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+		"dev:frontend": "cd nipa-frontend && npm run dev",
+		"dev:backend": "cd nipa-backend && npm run dev",
+		"install:all": "concurrently \"cd nipa-frontend && npm install\" \"cd nipa-backend && npm install\"",
+		"install:deps": "npm install"
+	},
+	"devDependencies": {
+		"concurrently": "^9.1.2"
+	}
+}
