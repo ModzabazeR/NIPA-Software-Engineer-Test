@@ -11,8 +11,10 @@ const app = new Hono();
 app.post("/register", zValidator("json", registerSchema), async (c) => {
   const { username, email, password } = c.req.valid("json");
 
-  const user = await prisma.user.findUnique({
-    where: { email },
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ email }, { username }],
+    },
   });
 
   if (user) {

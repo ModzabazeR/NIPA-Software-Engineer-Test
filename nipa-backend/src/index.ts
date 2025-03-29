@@ -6,6 +6,7 @@ import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import { jwt } from "hono/jwt";
 import type { JwtVariables } from "hono/jwt";
+import { HTTPException } from "hono/http-exception";
 
 type Variables = JwtVariables;
 
@@ -18,6 +19,33 @@ app.use("/ticket/*", (c, next) => {
     secret: process.env.JWT_SECRET!,
   });
   return jwtMiddleware(c, next);
+});
+
+app.onError((err, c) => {
+  console.error(err);
+  if (err instanceof HTTPException) {
+    return c.json(
+      {
+        success: false,
+        error: {
+          name: err.name,
+          message: "An error occurred",
+        },
+      },
+      err.status
+    );
+  } else {
+    return c.json(
+      {
+        success: false,
+        error: {
+          name: "InternalServerError",
+          message: "An error occurred",
+        },
+      },
+      500
+    );
+  }
 });
 
 app.get("/", (c) => {
