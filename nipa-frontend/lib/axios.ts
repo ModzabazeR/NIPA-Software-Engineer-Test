@@ -16,7 +16,19 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error)
+  (error) => {
+    if (error.response?.status === 401) {
+      // Clear the token
+      localStorage.removeItem("token");
+      // Redirect to login page
+      window.location.href = "/login";
+    }
+
+    if (!localStorage.getItem("token")) {
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;

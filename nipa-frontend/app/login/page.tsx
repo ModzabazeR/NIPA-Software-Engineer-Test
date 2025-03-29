@@ -25,20 +25,30 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-
+import { postLogin, postRegister } from "@/lib/api/authApi";
+import { AxiosError } from "axios";
+import { useRouter } from "next/navigation";
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string(),
 });
 
 const registerSchema = z.object({
-  username: z.string().min(3),
+  username: z
+    .string()
+    .min(3)
+    .regex(/^[a-z0-9]+$/, {
+      message: "Username may contain only lowercase letters and numbers",
+    }),
   email: z.string().email(),
   password: z.string().min(8),
 });
 
 export default function AuthPage() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedTab, setSelectedTab] = useState<"login" | "register">("login");
+
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -57,27 +67,66 @@ export default function AuthPage() {
 
   const handleLogin = async (values: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
-    console.log(values);
-    // TODO: Implement login logic
-    toast.success("Login successful", {
-      description: "Welcome back!",
-    });
-    setIsLoading(false);
+    try {
+      const response = await postLogin(values.email, values.password);
+      if (response.success) {
+        toast.success("Login successful", {
+          description: "Welcome back!",
+        });
+        localStorage.setItem("token", response.data.token);
+        router.push("/");
+      } else {
+        toast.error("Login failed", {
+          description: response.error?.message,
+        });
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error("Login failed", {
+          description: error.response?.data.error.message,
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleRegister = async (values: z.infer<typeof registerSchema>) => {
     setIsLoading(true);
-    console.log(values);
-    // TODO: Implement register logic
-    toast.success("Account created", {
-      description: "Your account has been created successfully.",
-    });
-    setIsLoading(false);
+    try {
+      const response = await postRegister(
+        values.username,
+        values.email,
+        values.password
+      );
+      if (response.success) {
+        toast.success("Account created", {
+          description: "Your account has been created successfully.",
+        });
+        setSelectedTab("login");
+      } else {
+        toast.error("Account creation failed", {
+          description: response.error?.message,
+        });
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error("Account creation failed", {
+          description: error.response?.data.error.message,
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center">
-      <Tabs defaultValue="login" className="min-w-sm">
+      <Tabs
+        value={selectedTab}
+        onValueChange={(value) => setSelectedTab(value as "login" | "register")}
+        className="w-sm"
+      >
         <TabsList className="flex w-full">
           <TabsTrigger className="cursor-pointer" value="login">
             Login
@@ -172,11 +221,7 @@ export default function AuthPage() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            placeholder="Enter your email"
-                            type="email"
-                          />
+                          <Input {...field} placeholder="Enter your email" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
