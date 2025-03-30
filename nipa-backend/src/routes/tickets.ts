@@ -20,6 +20,26 @@ app.get("/", async (c) => {
     orderBy: {
       updatedAt: "desc",
     },
+    include: {
+      createdBy: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+      updatedBy: {
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      },
+    },
   });
 
   return c.json({
