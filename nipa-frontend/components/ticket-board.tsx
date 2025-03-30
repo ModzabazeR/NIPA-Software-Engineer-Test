@@ -64,7 +64,9 @@ export default function TicketBoard() {
                 status={status}
                 ticketCount={statusTickets.length}
               />
-              <div className="flex flex-col gap-2">
+              <div
+                className={`flex flex-col gap-2 bg-${status}-background p-4 rounded-lg min-h-[calc(100vh-200px)]`}
+              >
                 {statusTickets.map((ticket) => (
                   <ReadonlySheet
                     key={ticket.id}

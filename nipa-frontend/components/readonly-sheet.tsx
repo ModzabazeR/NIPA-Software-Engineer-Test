@@ -44,7 +44,11 @@ function TicketInfoSection({
         <Icon className="h-4 w-4" />
         <span>{label}</span>
       </div>
-      <div className={`${noBackground ? "" : "bg-muted/80 p-3 rounded-md"}`}>
+      <div
+        className={`${
+          noBackground ? "" : "bg-muted/80 p-3 rounded-md"
+        } whitespace-pre-line`}
+      >
         {children}
       </div>
     </div>
@@ -81,7 +85,7 @@ export default function ReadonlySheet({
           </TicketInfoSection>
 
           <TicketInfoSection icon={FileText} label="Description">
-            <p className="text-sm">{ticket.description}</p>
+            <p className="text-sm break-words">{ticket.description}</p>
           </TicketInfoSection>
 
           <TicketInfoSection icon={Phone} label="Contact Information">
