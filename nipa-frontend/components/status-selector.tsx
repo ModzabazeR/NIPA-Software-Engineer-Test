@@ -9,7 +9,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { useState } from "react";
-
+import { statusColors } from "@/lib/statusColors";
 interface StatusSelectorProps {
   status: TicketStatus;
   onStatusChange: (status: TicketStatus) => void;
@@ -36,7 +36,7 @@ export default function StatusSelector({
       }}
     >
       <SelectTrigger
-        className={`w-full bg-${selectedStatus}-background text-${selectedStatus}-foreground capitalize font-medium`}
+        className={`w-full ${statusColors[selectedStatus].background} ${statusColors[selectedStatus].foreground} capitalize font-medium`}
       >
         <SelectValue />
       </SelectTrigger>
@@ -45,7 +45,7 @@ export default function StatusSelector({
           <SelectItem
             key={status}
             value={status}
-            className={`bg-${status}-background text-${status}-foreground focus:bg-${status}-background focus:text-${status}-foreground capitalize font-medium my-1`}
+            className={`${statusColors[status].background} ${statusColors[status].foreground} focus:${statusColors[status].background} focus:${statusColors[status].foreground} capitalize font-medium my-1`}
           >
             {status}
           </SelectItem>

@@ -1,8 +1,23 @@
 import { TicketStatus } from "./types";
 
-export const statusColors: Record<TicketStatus, string> = {
-  pending: "bg-yellow-500/70",
-  accepted: "bg-blue-500/70",
-  resolved: "bg-green-500/70",
-  rejected: "bg-red-500/70",
+export const statusColors: Record<
+  TicketStatus,
+  { foreground: string; background: string }
+> = {
+  pending: {
+    foreground: "text-yellow-800",
+    background: "bg-yellow-100",
+  },
+  accepted: {
+    foreground: "text-blue-800",
+    background: "bg-blue-100",
+  },
+  resolved: {
+    foreground: "text-green-800",
+    background: "bg-green-100",
+  },
+  rejected: {
+    foreground: "text-red-800",
+    background: "bg-red-100",
+  },
 };

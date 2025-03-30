@@ -1,3 +1,4 @@
+import { statusColors } from "@/lib/statusColors";
 import { Ticket } from "@/lib/types";
 import { format } from "date-fns";
 import { Edit } from "lucide-react";
@@ -8,11 +9,13 @@ interface TicketCardProps {
 
 export default function TicketCard({ ticket }: TicketCardProps) {
   return (
-    <div className="flex flex-col gap-3 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer text-left bg-white/60">
+    <div className="flex flex-col gap-3 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer text-left bg-white/60">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">{ticket.title}</h2>
         <span
-          className={`px-2 py-1 text-xs font-medium rounded-full bg-${ticket.status}-background text-${ticket.status}-foreground`}
+          className={`px-2 py-1 text-xs font-medium rounded-full ${
+            statusColors[ticket.status].background
+          } ${statusColors[ticket.status].foreground}`}
         >
           {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
         </span>
