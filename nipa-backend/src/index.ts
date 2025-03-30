@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import auth from "./routes/auth.js";
-import ticket from "./routes/tickets.js";
+import tickets from "./routes/tickets.js";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
 import { jwt } from "hono/jwt";
@@ -14,7 +14,7 @@ const app = new Hono<{ Variables: Variables }>();
 
 app.use("*", logger());
 app.use("*", cors());
-app.use("/ticket/*", (c, next) => {
+app.use("/tickets/*", (c, next) => {
   const jwtMiddleware = jwt({
     secret: process.env.JWT_SECRET!,
   });
@@ -53,7 +53,7 @@ app.get("/", (c) => {
 });
 
 app.route("/auth", auth);
-app.route("/ticket", ticket);
+app.route("/tickets", tickets);
 
 serve(
   {

@@ -16,7 +16,11 @@ const app = new Hono<{ Variables: JwtPayload }>();
 
 // get all tickets
 app.get("/", async (c) => {
-  const tickets = await prisma.ticket.findMany();
+  const tickets = await prisma.ticket.findMany({
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
 
   return c.json({
     success: true,
