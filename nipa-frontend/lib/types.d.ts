@@ -2,8 +2,8 @@ export type User = {
   id: string;
   username: string;
   email: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Ticket = {
@@ -14,8 +14,10 @@ export type Ticket = {
   status: TicketStatus;
   createdById: string;
   updatedById: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: User;
+  updatedBy: User | null;
 };
 
 export type TicketStatus = "pending" | "accepted" | "resolved" | "rejected";
@@ -48,6 +50,12 @@ export interface GetTicketsResponse extends Response {
 }
 
 export interface CreateTicketResponse extends Response {
+  data: {
+    ticket: Ticket;
+  };
+}
+
+export interface UpdateTicketStatusResponse extends Response {
   data: {
     ticket: Ticket;
   };

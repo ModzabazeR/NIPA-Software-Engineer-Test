@@ -1,5 +1,4 @@
 import { TicketStatus } from "@/lib/types";
-import { statusColors } from "@/lib/statusColors";
 
 interface StatusHeaderProps {
   status: TicketStatus;
@@ -11,7 +10,7 @@ export function StatusHeader({ status, ticketCount }: StatusHeaderProps) {
     <>
       <div className="flex justify-between items-center">
         <h1
-          className={`${statusColors[status]} text-sm text-white py-1 px-2 rounded-sm cursor-pointer capitalize`}
+          className={`bg-${status}-background text-${status}-foreground text-sm font-medium py-1 px-2 rounded-sm cursor-pointer capitalize`}
         >
           {status}
         </h1>

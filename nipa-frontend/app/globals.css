@@ -44,6 +44,23 @@
   --animate-fade-left: fade-left 0.5s ease;
   --animate-fade-right: fade-right 0.5s ease;
 
+  /* ticket.status === "pending"
+              ? "bg-yellow-100 text-yellow-800"
+              : ticket.status === "accepted"
+              ? "bg-blue-100 text-blue-800"
+              : ticket.status === "resolved"
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800" */
+
+  --color-pending-background: oklch(0.973 0.071 103.193);
+  --color-pending-foreground: oklch(0.476 0.114 61.907);
+  --color-accepted-background: oklch(0.932 0.032 255.585);
+  --color-accepted-foreground: oklch(0.424 0.199 265.638);
+  --color-resolved-background: oklch(0.962 0.044 156.743);
+  --color-resolved-foreground: oklch(0.448 0.119 151.328);
+  --color-rejected-background: oklch(0.936 0.032 17.717);
+  --color-rejected-foreground: oklch(0.444 0.177 26.899);
+
   @keyframes fade-left {
     from {
       opacity: 0;

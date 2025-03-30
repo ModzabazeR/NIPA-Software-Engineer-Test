@@ -1,6 +1,12 @@
 import { AxiosResponse } from "axios";
 import axiosInstance from "../axios";
-import { CreateTicketResponse, GetTicketsResponse, Ticket } from "../types";
+import {
+  CreateTicketResponse,
+  GetTicketsResponse,
+  Ticket,
+  TicketStatus,
+  UpdateTicketStatusResponse,
+} from "../types";
 import { getToken } from "../utils";
 
 export const getTickets = async () => {
@@ -35,6 +41,28 @@ export const postCreateTicket = async (
           description,
           contactInformation,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const patchUpdateTicketStatus = async (
+  id: string,
+  status: TicketStatus
+) => {
+  try {
+    const token = getToken();
+    const response: AxiosResponse<UpdateTicketStatusResponse> =
+      await axiosInstance.patch(
+        `/tickets/${id}/status`,
+        { status },
         {
           headers: {
             Authorization: `Bearer ${token}`,
