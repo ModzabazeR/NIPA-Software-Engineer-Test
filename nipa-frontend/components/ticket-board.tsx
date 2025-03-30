@@ -3,8 +3,8 @@
 import { getTickets, patchUpdateTicketStatus } from "@/lib/api/ticketApi";
 import { Ticket, TicketStatus } from "@/lib/types";
 import { useEffect, useState } from "react";
-import { StatusHeader } from "@/components/status-header";
-import { TicketCard } from "@/components/ticket-card";
+import StatusHeader from "@/components/status-header";
+import TicketCard from "@/components/ticket-card";
 import { toast } from "sonner";
 import NewTicket from "@/components/new-ticket";
 import ReadonlySheet from "@/components/readonly-sheet";

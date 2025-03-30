@@ -5,7 +5,10 @@ interface StatusHeaderProps {
   ticketCount: number;
 }
 
-export function StatusHeader({ status, ticketCount }: StatusHeaderProps) {
+export default function StatusHeader({
+  status,
+  ticketCount,
+}: StatusHeaderProps) {
   return (
     <>
       <div className="flex justify-between items-center">

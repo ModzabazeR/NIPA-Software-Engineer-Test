@@ -6,7 +6,7 @@ interface TicketCardProps {
   ticket: Ticket;
 }
 
-export function TicketCard({ ticket }: TicketCardProps) {
+export default function TicketCard({ ticket }: TicketCardProps) {
   return (
     <div className="flex flex-col gap-3 p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer text-left bg-white/60">
       <div className="flex items-center justify-between">
