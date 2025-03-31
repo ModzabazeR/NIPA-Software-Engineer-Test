@@ -34,21 +34,24 @@ The system is designed with a single user role: Admin. Administrators are respon
 ```
 NIPA-Software-Engineer-Test/
 │
-├── nipa-frontend/ # Next.js frontend application
-│ ├── app/			# Next.js app directory
-│ ├── components/	# React components
-│ ├── lib/ 			# Utility functions and configurations
-│ └── public/		# Static assets
+├── nipa-frontend/       # Next.js frontend application
+│   ├── app/             # Next.js app directory
+│   ├── components/      # Reusable components
+│   │   └── ui/          # shadcn/ui components
+│   └── lib/             # Utility functions and configurations
+│       └── api/         # API calls
 │
-├── nipa-backend/ # Hono.js backend application
-│ ├── src/ 			# Source code
-│ │ ├── routes/ 	# API routes
-│ │ ├── config/ 	# Configuration files
-│ │ └── middleware/ # Custom middleware
-│ └── prisma/ 		# Database schema and migrations
+├── nipa-backend/   # Hono.js backend application
+│ ├── src/          # Source code
+│ │ ├── routes/     # API routes
+│ │ ├── config/     # Backend configurations
+│ │ ├── docs/       # OpenAPI documentation
+│ │ ├── schema/     # Zod schemas
+│ │ ├── middleware/ # Custom middleware
+│ │ └── index.ts    # Entry point for the backend
+│ └── prisma/       # Database schema and migrations
 │
-├── .env 			# Environment variables
-└── compose.yml 	# Docker compose configuration
+└── compose.yml     # Docker compose configuration
 ```
 
 ## Getting Started
