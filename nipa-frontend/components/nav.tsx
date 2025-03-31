@@ -1,4 +1,4 @@
-import LogoutButton from "./logout-button";
+import LogoutButton from "./auth/logout-button";
 
 export default function Nav() {
   return (

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { useState } from "react";
 import { useTicketForm } from "@/hooks/useTicketForm";
-import { TicketForm } from "@/components/forms/ticket-form";
+import { TicketForm } from "@/components/tickets/ticket-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 interface NewTicketProps {

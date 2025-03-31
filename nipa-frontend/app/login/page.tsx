@@ -11,8 +11,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLoginForm } from "@/hooks/useLoginForm";
 import { useRegisterForm } from "@/hooks/useRegisterForm";
-import { LoginForm } from "@/components/forms/login-form";
-import { RegisterForm } from "@/components/forms/register-form";
+import { LoginForm } from "@/components/auth/login-form";
+import { RegisterForm } from "@/components/auth/register-form";
 
 export default function AuthPage() {
   const [selectedTab, setSelectedTab] = useState<"login" | "register">("login");

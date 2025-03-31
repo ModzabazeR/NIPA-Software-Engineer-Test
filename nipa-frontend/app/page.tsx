@@ -1,5 +1,5 @@
 import Nav from "@/components/nav";
-import TicketBoard from "@/components/ticket-board";
+import TicketBoard from "@/components/tickets/ticket-board";
 
 export default function Home() {
   return (

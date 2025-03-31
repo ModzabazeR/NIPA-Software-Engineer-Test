@@ -3,12 +3,12 @@
 import { getTickets, patchUpdateTicketStatus } from "@/lib/api/ticketApi";
 import { Ticket, TicketStatus } from "@/lib/types";
 import { useEffect, useState } from "react";
-import StatusHeader from "@/components/status-header";
-import TicketCard from "@/components/ticket-card";
+import StatusHeader from "@/components/tickets/status-header";
+import TicketCard from "@/components/tickets/ticket-card";
 import { toast } from "sonner";
-import NewTicket from "@/components/new-ticket";
-import ReadonlySheet from "@/components/readonly-sheet";
-import { TicketControls } from "@/components/ticket-controls";
+import NewTicket from "@/components/tickets/new-ticket";
+import ReadonlySheet from "@/components/tickets/readonly-sheet";
+import { TicketControls } from "@/components/tickets/ticket-controls";
 import { statusColors } from "@/lib/statusColors";
 
 type SortBy = "updatedAt" | "createdAt";
@@ -81,8 +81,15 @@ export default function TicketBoard() {
           const statusTickets = sortedAndFilteredTickets.filter(
             (ticket) => ticket.status === status
           );
+          const shouldShow = filter === "all" || filter === status;
+
           return (
-            <div key={status} className="flex flex-col gap-4">
+            <div
+              key={status}
+              className={`flex flex-col gap-4 ${
+                !shouldShow ? "hidden lg:block lg:invisible" : ""
+              }`}
+            >
               <StatusHeader
                 status={status}
                 ticketCount={statusTickets.length}
