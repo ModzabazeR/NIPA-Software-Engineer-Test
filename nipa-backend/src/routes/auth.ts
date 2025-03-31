@@ -75,7 +75,7 @@ app.post(
 
     const jwtPayload = {
       id: user.id,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 1 day
     };
     const token = await sign(jwtPayload, process.env.JWT_SECRET!);
 
