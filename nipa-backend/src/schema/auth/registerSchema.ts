@@ -1,9 +1,17 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-  username: z.string(),
-  email: z.string().email(),
-  password: z.string().min(8),
+  username: z
+    .string()
+    .min(3)
+    .max(30)
+    .regex(/^[a-z0-9]+$/),
+  email: z
+    .string()
+    .min(1)
+    .email()
+    .transform((val) => val.toLowerCase()),
+  password: z.string().min(8).max(40),
 });
 
 export const registerResponseSchema = z.object({

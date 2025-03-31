@@ -8,12 +8,20 @@ import { toast } from "sonner";
 export const registerSchema = z.object({
   username: z
     .string()
-    .min(3)
+    .min(3, { message: "Username must be at least 3 characters long" })
+    .max(30, { message: "Username must be less than 30 characters" })
     .regex(/^[a-z0-9]+$/, {
       message: "Username may contain only lowercase letters and numbers",
     }),
-  email: z.string().email(),
-  password: z.string().min(8),
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Please enter a valid email address" })
+    .transform((val) => val.toLowerCase()),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long" })
+    .max(40, { message: "Password must be less than 40 characters" }),
 });
 
 export type RegisterFormValues = z.infer<typeof registerSchema>;

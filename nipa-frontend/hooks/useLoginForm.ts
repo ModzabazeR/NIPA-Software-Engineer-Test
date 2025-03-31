@@ -7,8 +7,15 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Please enter a valid email address" })
+    .transform((val) => val.toLowerCase()),
+  password: z
+    .string()
+    .min(1, { message: "Password is required" })
+    .max(40, { message: "Password must be less than 40 characters" }),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;

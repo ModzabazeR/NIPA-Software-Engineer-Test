@@ -6,11 +6,34 @@ import { toast } from "sonner";
 import { AxiosError } from "axios";
 
 const formSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
+  title: z
+    .string()
+    .min(3, { message: "Title must be at least 3 characters long" })
+    .max(50, { message: "Title must be less than 50 characters" })
+    .regex(/^[a-zA-Z0-9\s\-_.,!?()]+$/, {
+      message:
+        "Title may contain only letters, numbers, spaces, and basic punctuation",
+    }),
+  description: z
+    .string()
+    .min(10, { message: "Description must be at least 10 characters long" })
+    .max(500, { message: "Description must be less than 500 characters" })
+    .regex(/^[a-zA-Z0-9\s\-_.,!?()]+$/, {
+      message:
+        "Description may contain only letters, numbers, spaces, and basic punctuation",
+    }),
   contactInformation: z
     .string()
-    .min(1, { message: "Contact information is required" }),
+    .min(5, {
+      message: "Contact information must be at least 5 characters long",
+    })
+    .max(200, {
+      message: "Contact information must be less than 200 characters",
+    })
+    .regex(/^[a-zA-Z0-9\s\-_.,!?()@]+$/, {
+      message:
+        "Contact information may contain only letters, numbers, spaces, and basic punctuation",
+    }),
 });
 
 export type TicketFormValues = z.infer<typeof formSchema>;
