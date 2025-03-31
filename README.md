@@ -54,6 +54,14 @@ NIPA-Software-Engineer-Test/
 └── compose.yml         # Docker compose configuration
 ```
 
+## Application Screenshots
+
+### Homepage
+![Homepage](images/homepage.png)
+
+### API Documentation (Scalar)
+![API Documentation](images/scalar.png)
+
 ## Getting Started
 
 ### Prerequisites
