@@ -1,10 +1,14 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { registerSchema } from "../schema/registerSchema.js";
-import prisma from "../lib/prisma.js";
-import * as argon2 from "argon2";
 import { loginSchema } from "../schema/loginSchema.js";
-import { decode, sign, verify } from "hono/jwt";
+import { sign } from "hono/jwt";
+import prisma from "../config/prisma.js";
+import * as argon2 from "argon2";
+import {
+  UserAlreadyExistsError,
+  InvalidCredentialsError,
+} from "../utils/errors.js";
 
 const app = new Hono();
 
@@ -18,16 +22,7 @@ app.post("/register", zValidator("json", registerSchema), async (c) => {
   });
 
   if (user) {
-    return c.json(
-      {
-        success: false,
-        error: {
-          name: "UserAlreadyExists",
-          message: "User already exists",
-        },
-      },
-      400
-    );
+    throw new UserAlreadyExistsError();
   }
 
   const hashedPassword = await argon2.hash(password);
@@ -58,34 +53,15 @@ app.post("/login", zValidator("json", loginSchema), async (c) => {
   });
 
   if (!user) {
-    return c.json(
-      {
-        success: false,
-        error: {
-          name: "InvalidCredentials",
-          message: "Invalid email or password",
-        },
-      },
-      400
-    );
+    throw new InvalidCredentialsError();
   }
 
   const isPasswordValid = await argon2.verify(user.password, password);
 
   if (!isPasswordValid) {
-    return c.json(
-      {
-        success: false,
-        error: {
-          name: "InvalidCredentials",
-          message: "Wrong email or password",
-        },
-      },
-      400
-    );
+    throw new InvalidCredentialsError();
   }
 
-  // TODO: generate jwt token
   const jwtPayload = {
     id: user.id,
     exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour

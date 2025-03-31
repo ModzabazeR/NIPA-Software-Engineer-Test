@@ -4,23 +4,26 @@ import auth from "./routes/auth.js";
 import tickets from "./routes/tickets.js";
 import { logger } from "hono/logger";
 import { cors } from "hono/cors";
-import { jwt } from "hono/jwt";
-import type { JwtVariables } from "hono/jwt";
+import type { JwtPayload } from "./config/types.js";
 import { HTTPException } from "hono/http-exception";
+import { authMiddleware } from "./middleware/auth.middleware.js";
 
-type Variables = JwtVariables;
+const app = new Hono<{ Variables: JwtPayload }>();
 
-const app = new Hono<{ Variables: Variables }>();
-
+// Middleware
 app.use("*", logger());
 app.use("*", cors());
-app.use("/tickets/*", (c, next) => {
-  const jwtMiddleware = jwt({
-    secret: process.env.JWT_SECRET!,
-  });
-  return jwtMiddleware(c, next);
+app.use("/tickets/*", authMiddleware);
+
+// Routes
+app.get("/", (c) => {
+  return c.text("API is running");
 });
 
+app.route("/auth", auth);
+app.route("/tickets", tickets);
+
+// Error handling
 app.onError((err, c) => {
   console.error(err);
   if (err instanceof HTTPException) {
@@ -29,7 +32,7 @@ app.onError((err, c) => {
         success: false,
         error: {
           name: err.name,
-          message: "An error occurred",
+          message: err.message,
         },
       },
       err.status
@@ -48,13 +51,7 @@ app.onError((err, c) => {
   }
 });
 
-app.get("/", (c) => {
-  return c.text("API is running");
-});
-
-app.route("/auth", auth);
-app.route("/tickets", tickets);
-
+// Start server
 serve(
   {
     fetch: app.fetch,

@@ -1,20 +1,18 @@
 import { Hono } from "hono";
-import prisma from "../lib/prisma.js";
-import { createTicketSchema } from "../schema/createTicketSchema.js";
 import { zValidator } from "@hono/zod-validator";
+import { createTicketSchema } from "../schema/createTicketSchema.js";
 import {
   updateStatusSchema,
   updateStatusParamsSchema,
 } from "../schema/updateStatusSchema.js";
-
-interface JwtPayload {
-  id: string;
-  exp: number;
-}
+import prisma from "../config/prisma.js";
+import type { JwtPayload } from "../config/types.js";
+import { NotFoundError } from "../utils/errors.js";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 const app = new Hono<{ Variables: JwtPayload }>();
 
-// get all tickets
+// Get all tickets
 app.get("/", async (c) => {
   const tickets = await prisma.ticket.findMany({
     orderBy: {
@@ -50,7 +48,7 @@ app.get("/", async (c) => {
   });
 });
 
-// create a new ticket
+// Create a new ticket
 app.post("/create", zValidator("json", createTicketSchema), async (c) => {
   const { title, description, contactInformation } = c.req.valid("json");
   const jwtPayload: JwtPayload = c.get("jwtPayload");
@@ -67,6 +65,7 @@ app.post("/create", zValidator("json", createTicketSchema), async (c) => {
   return c.json({ success: true, data: { ticket } });
 });
 
+// Update ticket status
 app.patch(
   "/:id/status",
   zValidator("json", updateStatusSchema),
@@ -76,12 +75,20 @@ app.patch(
     const { status } = c.req.valid("json");
     const jwtPayload: JwtPayload = c.get("jwtPayload");
 
-    const ticket = await prisma.ticket.update({
-      where: { id },
-      data: { status, updatedBy: { connect: { id: jwtPayload.id } } },
-    });
-
-    return c.json({ success: true, data: { ticket } });
+    try {
+      const ticket = await prisma.ticket.update({
+        where: { id },
+        data: { status, updatedBy: { connect: { id: jwtPayload.id } } },
+      });
+      return c.json({ success: true, data: { ticket } });
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === "P2002") {
+          throw new NotFoundError("Ticket not found");
+        }
+      }
+      throw error;
+    }
   }
 );
 
