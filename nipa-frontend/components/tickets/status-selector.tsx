@@ -1,6 +1,6 @@
 "use client";
 
-import { TicketStatus } from "@/lib/types";
+import { TicketStatus, ticketStatuses } from "@/lib/types";
 import {
   Select,
   SelectTrigger,
@@ -19,12 +19,6 @@ export default function StatusSelector({
   status,
   onStatusChange,
 }: StatusSelectorProps) {
-  const statuses: TicketStatus[] = [
-    "pending",
-    "accepted",
-    "resolved",
-    "rejected",
-  ];
   const [selectedStatus, setSelectedStatus] = useState<TicketStatus>(status);
 
   return (
@@ -41,7 +35,7 @@ export default function StatusSelector({
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        {statuses.map((status) => (
+        {ticketStatuses.map((status) => (
           <SelectItem
             key={status}
             value={status}

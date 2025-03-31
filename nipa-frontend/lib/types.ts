@@ -21,6 +21,12 @@ export type Ticket = {
 };
 
 export type TicketStatus = "pending" | "accepted" | "resolved" | "rejected";
+export const ticketStatuses: TicketStatus[] = [
+  "pending",
+  "accepted",
+  "resolved",
+  "rejected",
+];
 
 export interface Response {
   success: boolean;
