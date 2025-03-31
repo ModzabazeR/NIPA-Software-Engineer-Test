@@ -7,6 +7,8 @@ import { cors } from "hono/cors";
 import type { JwtPayload } from "./config/types.js";
 import { HTTPException } from "hono/http-exception";
 import { authMiddleware } from "./middleware/auth.middleware.js";
+import { openAPISpecs } from "hono-openapi";
+import { apiReference } from "@scalar/hono-api-reference";
 
 const app = new Hono<{ Variables: JwtPayload }>();
 
@@ -22,6 +24,28 @@ app.get("/", (c) => {
 
 app.route("/auth", auth);
 app.route("/tickets", tickets);
+
+app.get(
+  "/docs",
+  apiReference({
+    theme: "kepler",
+    url: "/openapi",
+  })
+);
+
+app.get(
+  "/openapi",
+  openAPISpecs(app, {
+    documentation: {
+      info: {
+        title: "Hono.js",
+        version: "1.0.0",
+        description: "Ticket Management API",
+      },
+      servers: [{ url: "http://localhost:8787", description: "Local Server" }],
+    },
+  })
+);
 
 // Error handling
 app.onError((err, c) => {
