@@ -3,7 +3,6 @@ import axiosInstance from "../axios";
 import {
   CreateTicketResponse,
   GetTicketsResponse,
-  Ticket,
   TicketStatus,
   UpdateTicketStatusResponse,
 } from "../types";

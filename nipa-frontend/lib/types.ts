@@ -30,7 +30,7 @@ export const ticketStatuses: TicketStatus[] = [
 
 export interface Response {
   success: boolean;
-  data?: any;
+  data?: unknown;
   error?: {
     name: string;
     message: string;

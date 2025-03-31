@@ -25,11 +25,10 @@ export default function TicketBoard() {
       setIsLoading(true);
       const response = await getTickets();
       setTickets(response.data.tickets);
+      setIsLoading(false);
     } catch (error) {
       console.error(error);
       toast.error("An error occurred while fetching tickets");
-    } finally {
-      setIsLoading(false);
     }
   };
 
