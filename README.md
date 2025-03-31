@@ -1,11 +1,11 @@
 # Ticket Management System
 
-## 1. Project Overview
+## Project Overview
 A ticket management system built with Next.js and Hono.js, designed to handle support tickets efficiently. The system allows users to create, track, and manage tickets with user-friendly interface.
 
 The system is designed with a single user role: Admin. Administrators are responsible for entering ticket details on behalf of customers and have full visibility of all tickets in the system. Any admin can view, update, and manage tickets to provide efficient customer support.
 
-## 2. Features and Specifications
+## Features and Specifications
 
 ### Core Features
 - User authentication system
@@ -30,7 +30,7 @@ The system is designed with a single user role: Admin. Administrators are respon
   - JWT Authentication
   - OpenAPI and Scalar for API documentation
 
-## 3. Project Structure
+## Project Structure
 ```
 NIPA-Software-Engineer-Test/
 │
@@ -51,7 +51,7 @@ NIPA-Software-Engineer-Test/
 └── compose.yml 	# Docker compose configuration
 ```
 
-## 4. Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js 18 or higher
@@ -95,7 +95,7 @@ npm run install:all
 npm run dev
 ```
 
-## 5. How to Access
+## How to Access
 
 After starting the application:
 
@@ -104,7 +104,7 @@ After starting the application:
 - API Documentation: http://localhost:8787/docs
 - Database: localhost:5432
 
-## 6. Usage Examples
+## Usage Examples
 
 ### Ticket Management Flow
 1. Login to the system
@@ -117,7 +117,7 @@ After starting the application:
 5. Track ticket status (pending, accepted, resolved, rejected)
 6. Try updating the ticket status to see the status changes
 
-## 7. Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
