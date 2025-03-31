@@ -77,25 +77,34 @@ POSTGRES_PORT=5432
 JWT_SECRET=your_jwt_secret
 ```
 
-### Installation and Running
-
-#### Using Docker (Production)
-```bash
-docker compose up -d
-```
-
-#### Manual Setup (Development)
-Create `.env` file in the backend directory:
+3. Create `.env` file in the backend directory (optional, for local development):
 ```env
 DATABASE_URL=postgresql://your_user:your_password@localhost:5432/your_db_name?schema=public
 JWT_SECRET=your_jwt_secret
 ```
 
+### Installation and Running
+
+#### Development Environment
+
+Run only the database by docker if desired:
+```bash
+docker compose up -d db
+```
+
 Run the following commands in the root directory to install dependencies and start the application (assuming PostgreSQL is already running):
 
 ```bash
-npm run install:all
+npm run install:deps && npm run install:all
 npm run dev
+```
+
+#### Production Environment
+
+Run the following commands in the root directory to start the application and database:
+
+```bash
+docker compose up -d
 ```
 
 ## How to Access
@@ -139,5 +148,5 @@ After starting the application:
    - Try removing existing containers and volumes:
      ```bash
      docker compose down -v
-     docker compose up --build
+     docker compose up --build -d
      ```
