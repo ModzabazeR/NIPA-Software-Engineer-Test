@@ -41,17 +41,17 @@ NIPA-Software-Engineer-Test/
 │   └── lib/             # Utility functions and configurations
 │       └── api/         # API calls
 │
-├── nipa-backend/   # Hono.js backend application
-│ ├── src/          # Source code
-│ │ ├── routes/     # API routes
-│ │ ├── config/     # Backend configurations
-│ │ ├── docs/       # OpenAPI documentation
-│ │ ├── schema/     # Zod schemas
-│ │ ├── middleware/ # Custom middleware
-│ │ └── index.ts    # Entry point for the backend
-│ └── prisma/       # Database schema and migrations
+├── nipa-backend/        # Hono.js backend application
+│ ├── src/               # Source code
+│ │ ├── routes/          # API routes
+│ │ ├── config/          # Backend configurations
+│ │ ├── docs/            # OpenAPI documentation
+│ │ ├── schema/          # Zod schemas
+│ │ ├── middleware/      # Custom middleware
+│ │ └── index.ts         # Entry point for the backend
+│ └── prisma/            # Database schema and migrations
 │
-└── compose.yml     # Docker compose configuration
+└── compose.yml         # Docker compose configuration
 ```
 
 ## Getting Started
